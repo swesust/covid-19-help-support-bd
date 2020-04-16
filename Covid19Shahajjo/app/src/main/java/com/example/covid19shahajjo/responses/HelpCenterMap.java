@@ -11,6 +11,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import java.util.List;
 public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
 
     private MapView mapView;
+    public static MapboxMap mapboxMap;
+    private BuildingPlugin buildingPlugin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,14 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
     }
 
     @Override
-    public void onMapReady(@NonNull MapboxMap mapboxMap) {
+    public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+        this.mapboxMap = mapboxMap;
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-
-                // Map is set up and the style has loaded. Now you can add data or make other map adjustments.
+                buildingPlugin = new BuildingPlugin(mapView, mapboxMap, style);
+                buildingPlugin.setMinZoomLevel(15f);
+                buildingPlugin.setVisibility(true);
 
             }
         });
