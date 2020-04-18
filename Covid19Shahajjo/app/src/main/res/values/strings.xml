@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Covid19Shahajjo</string>
     <string name="access_token" translatable="false"> sk.eyJ1IjoibWVoZWRpcnVtaSIsImEiOiJjazVoZHM1ZXkwMmo0M2xudmIzZjNxNG85In0.Z4M4-gPDTIIxr9MB7BPHoQ</string>
+
+    <string-array name="menu_bd">
+        <item>নিকটস্থ সাহায্য নাম্বার</item>
+        <item>নিকটস্থ COVID-19 হাসপাতাল</item>
+        <item>COVID-19 পরিসংখ্যান</item>
+    </string-array>
+
+    <string-array name="menu_en">
+        <item>Nearest Contact Support</item>
+        <item>Nearest COVID-19 Health Center</item>
+        <item>COVID-19 Statistics</item>
+    </string-array>
 </resources>
