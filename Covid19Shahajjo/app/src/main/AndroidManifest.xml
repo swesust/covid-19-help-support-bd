@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".responses.HelpCenterMap"></activity>
+        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".responses.HelpCenterMap" />
         <activity android:name=".responses.HelpCenter" />
         <activity android:name=".MainActivity">
             <intent-filter>
