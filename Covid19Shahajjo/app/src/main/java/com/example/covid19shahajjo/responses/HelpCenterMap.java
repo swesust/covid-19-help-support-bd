@@ -1,19 +1,20 @@
 package com.example.covid19shahajjo.responses;
 
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
 
 import com.example.covid19shahajjo.R;
-import com.mapbox.android.core.location.LocationEngine;
-import com.mapbox.android.core.location.LocationEngineProvider;
-import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.api.geocoding.v5.GeocodingCriteria;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.core.exceptions.ServicesException;
+import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -27,6 +28,8 @@ import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -65,6 +68,7 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
                 buildingPlugin.setMinZoomLevel(15f);
                 buildingPlugin.setVisibility(true);
                 enableLocationComponent(style);
+                drawMarker();
 
             }
         });
@@ -155,6 +159,26 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
+    public void drawMarker(){
+
+        List<MarkerOptions> markerOptions = new ArrayList<>();
+        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
+        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
+        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
+        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
+        markerOptions.add(new MarkerOptions().position(new LatLng(24.9172, 91.8319)).setTitle("SUST"));
+
+        mapboxMap.addMarkers(markerOptions);
+
+
+
+    }
+
+
+
 
 }
+
+
+
 
