@@ -1,4 +1,4 @@
-package com.example.covid19shahajjo.responses;
+package com.example.covid19shahajjo.activities;
 
 import android.content.Context;
 import android.os.Bundle;

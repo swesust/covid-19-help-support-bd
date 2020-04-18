@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.covid19shahajjo.responses.HelpCenter;
-
-import static com.example.covid19shahajjo.R.id.text;
+import com.example.covid19shahajjo.activities.HelpCenter;
 
 public class MainActivity extends AppCompatActivity {
 
