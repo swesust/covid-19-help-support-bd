@@ -27,12 +27,14 @@ public class ContactSupport extends AppCompatActivity {
     private Spinner spinnerDivision, spinnerDistrict, spinnerSubDistrict;
     private ContactService service;
     private final  String LOGGER = "contact_support_log";
+    private final String NoNumber = "No Number";
     private TextView contactUNO, contactPolice, contactCivilSurgeon, contactFireService;
 
     private List<Area> divisionList, districtList;
     private Area selectedDivision, selectedDistrict;
     private List<AreaWithContacts> subDistrictList;
     private AreaWithContacts selectedSubDistrict;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,20 +186,46 @@ public class ContactSupport extends AppCompatActivity {
         });
     }
 
-    private void informationRender(ContactsInfo contactsInfo){
-        if(contactsInfo.UNO != ""){
-            contactUNO.setText(contactsInfo.UNO);
-        }
-        if(contactsInfo.CivilSurgeon != ""){
-            contactCivilSurgeon.setText(contactsInfo.CivilSurgeon);
-        }
-        if(contactsInfo.FireService != ""){
-            contactFireService.setText(contactsInfo.FireService);
-        }
-        if(contactsInfo.Police != ""){
-            contactPolice.setText(contactsInfo.Police);
+    private void informationRender(ContactsInfo contact){
+        setContactNumber(contactUNO, contact.UNO == "" ? NoNumber : contact.UNO);
+        setContactNumber(contactCivilSurgeon, contact.CivilSurgeon == "" ? NoNumber : contact.CivilSurgeon);
+        setContactNumber(contactPolice, contact.Police == "" ? NoNumber : contact.Police);
+        setContactNumber(contactFireService, contact.FireService == "" ? NoNumber : contact.FireService);
+    }
+
+    private void setContactNumber(TextView view, String value){
+        view.setText(value);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        divisionList.clear();
+        districtList.clear();
+        subDistrictList.clear();
+        selectedDivision = null;
+        selectedDistrict = null;
+        selectedSubDistrict = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try{
+            Runtime.getRuntime().gc();
+            finish();
+        }catch (Exception e){
+            clearVariables();
         }
     }
 
-
+    private void clearVariables(){
+        service = null;
+        divisionList = null;
+        districtList = null;
+        subDistrictList = null;
+        selectedDivision = null;
+        selectedDistrict = null;
+        selectedSubDistrict = null;
+    }
 }

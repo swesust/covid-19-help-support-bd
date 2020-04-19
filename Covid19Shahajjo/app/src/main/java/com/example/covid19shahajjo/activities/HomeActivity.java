@@ -77,6 +77,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(position == SETTINGS_POSITION){
             intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+            finish();
         }
         else if(position == HEALTH_CENTER_POSITION){
             intent = new Intent(this, HelpCenterMap.class);
