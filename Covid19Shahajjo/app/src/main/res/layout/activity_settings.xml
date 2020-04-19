@@ -18,6 +18,7 @@
         android:textAlignment="center" />
 
     <RadioGroup
+        android:id="@+id/settings_lang_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -26,8 +27,8 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onLanguageSelect"
             android:textSize="18dp"
+            android:checked="true"
             android:layout_marginTop="10dp"
             android:text="বাংলা" />
 
@@ -36,7 +37,6 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onLanguageSelect"
             android:textSize="18dp"
             android:layout_marginTop="10dp"
             android:text="English" />
