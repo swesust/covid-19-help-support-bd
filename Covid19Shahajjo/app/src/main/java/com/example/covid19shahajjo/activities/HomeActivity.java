@@ -20,6 +20,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private Enums.Language userLang;
     private HomeMenuAdapter adapter;
 
+    private final int CONTACT_SUPPORT_POSITION = 0;
+    private final int HEALTH_CENTER_POSITION = 1;
+    private final int STATISTICS_POSITION = 2;
+    private final int SETTINGS_POSITION = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(intent);
         }
         else{
-            language = language;
+            userLang = language;
         }
     }
 
@@ -64,6 +69,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void intentOnClickAction(int position){
-
+        Intent intent;
+        if(position == STATISTICS_POSITION){
+            intent = new Intent(this, StatisticsActivity.class);
+            startActivity(intent);
+        }
+        else if(position == SETTINGS_POSITION){
+            intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
     }
 }
