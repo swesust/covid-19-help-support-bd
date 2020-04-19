@@ -29,9 +29,19 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setTitle("Home");
+        setUserPreferableTitle();
         checkPreconditions();
         layoutComponentMapping();
+    }
+
+    private void setUserPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String title = getResources().getString(R.string.home_title_bd);
+            setTitle(title);
+        }else{
+            setTitle("COVID-19 Shahajjo");
+        }
     }
 
     private void checkPreconditions(){

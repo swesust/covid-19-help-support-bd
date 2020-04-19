@@ -21,8 +21,19 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setUserPreferableTitle();
         layoutComponentsMapping();
         setUserSelectedLanguage();
+    }
+
+    private void setUserPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String title = getResources().getString(R.string.settings_title_bd);
+            setTitle(title);
+        }else{
+            setTitle("Settings");
+        }
     }
 
     private void layoutComponentsMapping(){
