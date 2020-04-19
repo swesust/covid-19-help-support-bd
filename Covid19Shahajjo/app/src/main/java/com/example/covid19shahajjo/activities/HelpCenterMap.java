@@ -3,6 +3,7 @@ package com.example.covid19shahajjo.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.helper.CameraChange;
 import com.example.covid19shahajjo.helper.LocationChangeListeningActivityLocationCallback;
+import com.example.covid19shahajjo.models.HealthCenter;
+import com.example.covid19shahajjo.services.HospitalService;
+import com.example.covid19shahajjo.services.ServiceCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -49,7 +53,7 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
     public static LocationEngine locationEngine;
     public static final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
     public static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
-
+    List<MarkerOptions> markerOptions = new ArrayList<>();
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
 
     @Override
@@ -63,6 +67,7 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
         myLocation = findViewById(R.id.mylocation);
         myLocation.setOnClickListener(this);
 
+        getHospitalInfo();
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -78,8 +83,6 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
                 buildingPlugin.setMinZoomLevel(15f);
                 buildingPlugin.setVisibility(true);
                 enableLocationComponent(style);
-                drawMarker();
-
             }
         });
     }
@@ -181,18 +184,23 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    public void drawMarker(){
+    public void getHospitalInfo(){
 
-        List<MarkerOptions> markerOptions = new ArrayList<>();
-        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
-        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
-        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
-        markerOptions.add(new MarkerOptions().position(new LatLng(25.2854,51.5310)).setTitle("marker1"));
-        markerOptions.add(new MarkerOptions().position(new LatLng(24.9172, 91.8319)).setTitle("SUST"));
+        HospitalService service = new HospitalService();
+        service.getHospitals(new ServiceCallback<List<HealthCenter>>() {
+            @Override
+            public void onResult(List<HealthCenter> o) {
+                for(int i=0;i<o.size();i++){
+                    markerOptions.add(new MarkerOptions().position(new LatLng(o.get(i).Location.latitude,o.get(i).Location.longitude)).setTitle(o.get(i).Name+"\n\n"+o.get(i).Address+"\n"));
+                }
+                mapboxMap.addMarkers(markerOptions);
+            }
 
-        mapboxMap.addMarkers(markerOptions);
-
-
+            @Override
+            public void onFailed(Exception exception) {
+                Toast.makeText(getApplicationContext(), "Fail to load hopital info", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -201,7 +209,10 @@ public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallba
     public void onClick(View v) {
         initLocationEngine();
         CameraChange.setCameraPosition(latitude, longitude);
+
     }
+
+
 }
 
 
