@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.HelpCenterMap"/>
+        <activity android:name=".activities.ContactSupport"/>
     </application>
 
 </manifest>
