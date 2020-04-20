@@ -1,6 +1,6 @@
 package com.example.covid19shahajjo.helper;
 
-import com.example.covid19shahajjo.activities.HelpCenterMap;
+import com.example.covid19shahajjo.activities.HelpCenterMapActivity;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -15,7 +15,7 @@ public class CameraChange {
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
 
-        HelpCenterMap.mapboxMap.animateCamera(CameraUpdateFactory
+        HelpCenterMapActivity.mapboxMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(position), 7000);
 
     }

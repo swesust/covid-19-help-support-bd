@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.HelpCenterMap"/>
-        <activity android:name=".activities.ContactSupport"/>
+        <activity android:name=".activities.HelpCenterMapActivity"/>
+        <activity android:name=".activities.ContactSupportActivity"/>
         <receiver
             android:name=".services.ConnectivityReceiver"
             android:enabled="true">

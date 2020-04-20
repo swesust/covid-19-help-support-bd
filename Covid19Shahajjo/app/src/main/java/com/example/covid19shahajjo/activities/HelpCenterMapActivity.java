@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HelpCenterMap extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener, View.OnClickListener {
+public class HelpCenterMapActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener, View.OnClickListener {
 
     private MapView mapView;
     public static MapboxMap mapboxMap;

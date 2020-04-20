@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ContactSupport extends AppCompatActivity {
+public class ContactSupportActivity extends AppCompatActivity {
 
     private Spinner spinnerDivision, spinnerDistrict, spinnerSubDistrict;
     private ContactService service;
