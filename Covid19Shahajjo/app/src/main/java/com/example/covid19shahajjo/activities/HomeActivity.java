@@ -1,7 +1,9 @@
 package com.example.covid19shahajjo.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -13,10 +15,12 @@ import android.widget.ListView;
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.adapters.HomeMenuAdapter;
 import com.example.covid19shahajjo.helper.DeviceNetwork;
+import com.example.covid19shahajjo.helper.PermissionChecker;
 import com.example.covid19shahajjo.services.ConnectivityReceiver;
 import com.example.covid19shahajjo.utils.Alert;
 import com.example.covid19shahajjo.utils.ConnectivityListener;
 import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.PermissionManager;
 import com.example.covid19shahajjo.utils.SharedStorge;
 
 
@@ -32,12 +36,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int STATISTICS_POSITION = 2;
     private final int SETTINGS_POSITION = 3;
 
+    private PermissionChecker permissionChecker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUserPreferableTitle();
         checkPreconditions();
+        checkAppPermission();
         layoutComponentMapping();
 
     }
@@ -133,5 +140,45 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     public void showDialog(){
         Alert alert = new Alert(this);
         alert.show("No internet Connection", "Please turn on internet connection to continue");
+    }
+
+    private void checkAppPermission(){
+        permissionChecker = new PermissionChecker();
+        if(!PermissionManager.hasPermission(this, Manifest.permission.INTERNET)){
+            permissionChecker.requestInternetPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            permissionChecker.requestFineLocationPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+            permissionChecker.requestCoarseLocationPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
+            permissionChecker.requestAccessNetworkStatePermission(this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == permissionChecker.INTERNET_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.INTERNET)){
+                permissionChecker.requestInternetPermission(this);
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_NETWORK_STATE_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
+                permissionChecker.requestAccessNetworkStatePermission(this);
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_FINE_LOCATION_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                permissionChecker.requestFineLocationPermission(this);
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_COARSE_LOCATION_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                permissionChecker.requestCoarseLocationPermission(this);
+            }
+        }
     }
 }
