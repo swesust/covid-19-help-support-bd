@@ -8,7 +8,7 @@ import android.webkit.WebViewClient;
 
 public class AppWebViewClient extends WebViewClient {
     private Activity activity = null;
-    public final String HOST_URL = "https://bdcovid19.herokuapp.com/";
+    public final String HOST_URL = "https://arshovon.com/apps/c19/";
 
     public AppWebViewClient(Activity activity){
         this.activity = activity;
