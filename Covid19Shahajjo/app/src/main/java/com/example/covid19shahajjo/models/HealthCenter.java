@@ -8,4 +8,5 @@ public class HealthCenter {
     public String Address;
     public GeoLocation Location;
     public List<String> Contacts;
+    public String District;
 }
