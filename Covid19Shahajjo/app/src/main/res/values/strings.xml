@@ -11,8 +11,11 @@
 
     <string-array name="menu_en">
         <item>Nearest Contact Support</item>
-        <item>Nearest COVID-19 Health Center</item>
+        <item>Nearest COVID-19 Hospitals</item>
         <item>COVID-19 Statistics</item>
         <item>Settings</item>
     </string-array>
+
+    <string name="home_title_bd">কোভিট-১৯ সাহায্য</string>
+    <string name="settings_title_bd">সেটিংস</string>
 </resources>

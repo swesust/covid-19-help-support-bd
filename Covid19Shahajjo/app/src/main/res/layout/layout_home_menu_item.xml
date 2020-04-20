@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/home_menu_item_text"
         android:layout_gravity="right"
-        android:paddingRight="15dp"
+        android:paddingRight="10dp"
         android:gravity="center"
         android:textSize="20dp"
         android:textColor="#000000"
