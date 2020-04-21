@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.adapters.HomeMenuAdapter;
@@ -162,22 +163,22 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == permissionChecker.INTERNET_CODE){
             if(!PermissionManager.hasPermission(this, Manifest.permission.INTERNET)){
-                permissionChecker.requestInternetPermission(this);
+                Toast.makeText(this, "Internet Access Permission Is Required", Toast.LENGTH_SHORT).show();
             }
         }
         else if(requestCode == permissionChecker.ACCESS_NETWORK_STATE_CODE){
             if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
-                permissionChecker.requestAccessNetworkStatePermission(this);
+                Toast.makeText(this, "Network State Access Permission Is Required", Toast.LENGTH_SHORT).show();
             }
         }
         else if(requestCode == permissionChecker.ACCESS_FINE_LOCATION_CODE){
             if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-                permissionChecker.requestFineLocationPermission(this);
+                Toast.makeText(this, "Location Access Permission Is Required", Toast.LENGTH_SHORT).show();
             }
         }
         else if(requestCode == permissionChecker.ACCESS_COARSE_LOCATION_CODE){
             if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
-                permissionChecker.requestCoarseLocationPermission(this);
+                Toast.makeText(this, "Location Access Permission Is Required", Toast.LENGTH_SHORT).show();
             }
         }
     }
