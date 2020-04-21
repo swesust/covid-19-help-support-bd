@@ -18,4 +18,7 @@
 
     <string name="home_title_bd">কোভিট-১৯ সাহায্য</string>
     <string name="settings_title_bd">সেটিংস</string>
+    <string name="statistics_title_bd">পরিসংখ্যান</string>
+    <string name="nearest_hospitals_title_bd">নিকটস্থ হাসপাতাল</string>
+    <string name="contact_support_title_bd">নিকটস্থ সাহায্য নাম্বার</string>
 </resources>

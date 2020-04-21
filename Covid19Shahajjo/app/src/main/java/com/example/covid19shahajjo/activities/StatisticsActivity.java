@@ -12,6 +12,8 @@ import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.helper.DeviceNetwork;
 import com.example.covid19shahajjo.utils.Alert;
 import com.example.covid19shahajjo.utils.AppWebViewClient;
+import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.SharedStorge;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -21,7 +23,18 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        setUserPreferableTitle();
         layoutComponentMapping();
+    }
+
+    private void setUserPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String title = getResources().getString(R.string.statistics_title_bd);
+            setTitle(title);
+        }else{
+            setTitle("Statistics");
+        }
     }
 
     private void layoutComponentMapping(){

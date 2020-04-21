@@ -15,7 +15,9 @@ import com.example.covid19shahajjo.models.HealthCenter;
 import com.example.covid19shahajjo.services.HospitalService;
 import com.example.covid19shahajjo.services.ServiceCallback;
 import com.example.covid19shahajjo.utils.Alert;
+import com.example.covid19shahajjo.utils.Enums;
 import com.example.covid19shahajjo.utils.PermissionManager;
+import com.example.covid19shahajjo.utils.SharedStorge;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -64,8 +66,19 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_help_center_map);
+        setUserPreferableTitle();
         layoutComponentMapping(savedInstanceState);
         checkPreconditionsAndLoadData();
+    }
+
+    private void setUserPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String title = getResources().getString(R.string.nearest_hospitals_title_bd);
+            setTitle(title);
+        }else{
+            setTitle("Nearest COVID-19 Hospitals");
+        }
     }
 
     private void layoutComponentMapping(Bundle savedInstanceState){
@@ -119,7 +132,18 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     private MarkerOptions getMark(HealthCenter center){
         return new MarkerOptions()
                 .position(new LatLng(center.Location.latitude, center.Location.longitude))
-                .setTitle(center.Name+"\n"+center.Address);
+                .setTitle(center.Name+"\n\n"+center.Address+"\n"+getHealthCenterContactsAsString(center.Contacts));
+    }
+
+    private String getHealthCenterContactsAsString(List<String> list){
+        String numbers = "";
+        if(list == null){
+            return numbers;
+        }
+        for(String item : list){
+            numbers += (item+"\n");
+        }
+        return numbers;
     }
 
     @Override
