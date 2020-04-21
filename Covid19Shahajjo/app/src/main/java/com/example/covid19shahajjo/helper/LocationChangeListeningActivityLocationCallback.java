@@ -30,10 +30,10 @@ public class LocationChangeListeningActivityLocationCallback implements Location
         HelpCenterMapActivity.latitude = result.getLastLocation().getLatitude();
         HelpCenterMapActivity.longitude = result.getLastLocation().getLongitude();
 
-            // Pass the new location to the Maps SDK's LocationComponent
-            if (activity.mapboxMap != null && result.getLastLocation() != null) {
-                activity.mapboxMap.getLocationComponent().forceLocationUpdate(result.getLastLocation());
-            }
+        // Pass the new location to the Maps SDK's LocationComponent
+        if (activity.mapboxMap != null && result.getLastLocation() != null) {
+            activity.mapboxMap.getLocationComponent().forceLocationUpdate(result.getLastLocation());
+        }
 
     }
 
