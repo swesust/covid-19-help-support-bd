@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.covid19shahajjo.activities.HelpCenterMap;
+import com.example.covid19shahajjo.activities.HelpCenterMapActivity;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineResult;
 
@@ -14,21 +14,21 @@ import java.lang.ref.WeakReference;
 
 public class LocationChangeListeningActivityLocationCallback implements LocationEngineCallback<LocationEngineResult> {
 
-    private final WeakReference<HelpCenterMap> activityWeakReference;
+    private final WeakReference<HelpCenterMapActivity> activityWeakReference;
 
     boolean chk = true;
     public static Location locationForNavigation;
 
-    public LocationChangeListeningActivityLocationCallback(HelpCenterMap activity) {
+    public LocationChangeListeningActivityLocationCallback(HelpCenterMapActivity activity) {
         this.activityWeakReference = new WeakReference<>(activity);
     }
 
     @Override
     public void onSuccess(LocationEngineResult result) {
 
-        HelpCenterMap activity = activityWeakReference.get();
-        HelpCenterMap.latitude = result.getLastLocation().getLatitude();
-        HelpCenterMap.longitude = result.getLastLocation().getLongitude();
+        HelpCenterMapActivity activity = activityWeakReference.get();
+        HelpCenterMapActivity.latitude = result.getLastLocation().getLatitude();
+        HelpCenterMapActivity.longitude = result.getLastLocation().getLongitude();
 
             // Pass the new location to the Maps SDK's LocationComponent
             if (activity.mapboxMap != null && result.getLastLocation() != null) {
@@ -40,7 +40,7 @@ public class LocationChangeListeningActivityLocationCallback implements Location
     @Override
     public void onFailure(@NonNull Exception exception) {
         Log.d("LocationChangeActivity", exception.getLocalizedMessage());
-        HelpCenterMap activity = activityWeakReference.get();
+        HelpCenterMapActivity activity = activityWeakReference.get();
         if (activity != null) {
             Toast.makeText(activity, exception.getLocalizedMessage(),
                     Toast.LENGTH_SHORT).show();

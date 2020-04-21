@@ -17,12 +17,13 @@ import com.example.covid19shahajjo.models.ContactsInfo;
 import com.example.covid19shahajjo.services.ContactService;
 import com.example.covid19shahajjo.services.ServiceCallback;
 import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.SharedStorge;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ContactSupport extends AppCompatActivity {
+public class ContactSupportActivity extends AppCompatActivity {
 
     private Spinner spinnerDivision, spinnerDistrict, spinnerSubDistrict;
     private ContactService service;
@@ -40,6 +41,7 @@ public class ContactSupport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_support);
+        setUserPreferableTitle();
         service = new ContactService();
         layoutComponentMapping();
     }
@@ -48,6 +50,16 @@ public class ContactSupport extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadDivisions();
+    }
+
+    private void setUserPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String title = getResources().getString(R.string.contact_support_title_bd);
+            setTitle(title);
+        }else{
+            setTitle("Nearest Contact Support");
+        }
     }
 
     private void layoutComponentMapping(){
@@ -200,12 +212,17 @@ public class ContactSupport extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        divisionList.clear();
-        districtList.clear();
-        subDistrictList.clear();
-        selectedDivision = null;
-        selectedDistrict = null;
-        selectedSubDistrict = null;
+        try{
+            divisionList.clear();
+            districtList.clear();
+            subDistrictList.clear();
+            selectedDivision = null;
+            selectedDistrict = null;
+            selectedSubDistrict = null;
+        }catch (NullPointerException e){
+
+        }
+
     }
 
     @Override

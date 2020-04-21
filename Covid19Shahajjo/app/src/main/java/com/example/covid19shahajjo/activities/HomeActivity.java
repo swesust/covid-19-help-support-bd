@@ -1,14 +1,13 @@
 package com.example.covid19shahajjo.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,16 +15,18 @@ import android.widget.Toast;
 
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.adapters.HomeMenuAdapter;
+import com.example.covid19shahajjo.helper.DeviceNetwork;
+import com.example.covid19shahajjo.helper.PermissionChecker;
 import com.example.covid19shahajjo.services.ConnectivityReceiver;
+import com.example.covid19shahajjo.utils.Alert;
 import com.example.covid19shahajjo.utils.ConnectivityListener;
 import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.PermissionManager;
 import com.example.covid19shahajjo.utils.SharedStorge;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ConnectivityReceiver.ConnectivityReceiverListener{
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
+        ConnectivityReceiver.ConnectivityReceiverListener{
 
     private ListView menuView;
     private Enums.Language userLang;
@@ -36,12 +37,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int STATISTICS_POSITION = 2;
     private final int SETTINGS_POSITION = 3;
 
+    private PermissionChecker permissionChecker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUserPreferableTitle();
         checkPreconditions();
+        checkAppPermission();
         layoutComponentMapping();
 
     }
@@ -91,24 +95,29 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void intentOnClickAction(int position){
-        Intent intent;
         if(position == STATISTICS_POSITION){
-            intent = new Intent(this, StatisticsActivity.class);
-            startActivity(intent);
+            goPageIfConnected(StatisticsActivity.class);
         }
         else if(position == SETTINGS_POSITION){
-            intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             finish();
         }
         else if(position == HEALTH_CENTER_POSITION){
-            intent = new Intent(this, HelpCenterMap.class);
-            startActivity(intent);
+            goPageIfConnected(HelpCenterMapActivity.class);
         }
         else if(position == CONTACT_SUPPORT_POSITION){
-            intent = new Intent(this, ContactSupport.class);
-            startActivity(intent);
+            goPageIfConnected(ContactSupportActivity.class);
         }
+    }
+
+    private void goPageIfConnected(Class<?> destinationClass){
+        if(!DeviceNetwork.isConnected(this)){
+            showDialog();
+            return;
+        }
+        Intent intent = new Intent(this, destinationClass);
+        startActivity(intent);
     }
 
     @Override
@@ -125,24 +134,52 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     //Auto triggers when Network Changed
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if(isConnected==false)
-           { showDialouge();}
+        if(isConnected==false) {
+            showDialog();
+        }
     }
-    public void showDialouge(){
-       try{
-           AlertDialog.Builder builder =new AlertDialog.Builder(this);
-           builder.setTitle("No internet Connection");
-           builder.setMessage("Please turn on internet connection to continue");
-           builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialog, int which) {
-                   dialog.dismiss();
-               }
-           });
-           AlertDialog alertDialog = builder.create();
-           alertDialog.show();
-       }catch(Error error){
-           Log.e("ERROR","Error "+error.getMessage());
-       }
+    public void showDialog(){
+        Alert alert = new Alert(this);
+        alert.show("No internet Connection", "Please turn on internet connection to continue");
+    }
+
+    private void checkAppPermission(){
+        permissionChecker = new PermissionChecker();
+        if(!PermissionManager.hasPermission(this, Manifest.permission.INTERNET)){
+            permissionChecker.requestInternetPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            permissionChecker.requestFineLocationPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+            permissionChecker.requestCoarseLocationPermission(this);
+        }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
+            permissionChecker.requestAccessNetworkStatePermission(this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == permissionChecker.INTERNET_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.INTERNET)){
+                Toast.makeText(this, "Internet Access Permission Is Required", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_NETWORK_STATE_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
+                Toast.makeText(this, "Network State Access Permission Is Required", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_FINE_LOCATION_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                Toast.makeText(this, "Location Access Permission Is Required", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == permissionChecker.ACCESS_COARSE_LOCATION_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                Toast.makeText(this, "Location Access Permission Is Required", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

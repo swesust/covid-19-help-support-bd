@@ -1,19 +1,16 @@
 package com.example.covid19shahajjo.utils;
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
-
-import java.util.List;
 public class PermissionManager {
+
     public static boolean useRunTimePermissions() {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1;
     }
