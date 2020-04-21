@@ -1,19 +1,21 @@
 package com.example.covid19shahajjo.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.helper.CameraChange;
+import com.example.covid19shahajjo.helper.DeviceNetwork;
 import com.example.covid19shahajjo.helper.LocationChangeListeningActivityLocationCallback;
 import com.example.covid19shahajjo.models.HealthCenter;
 import com.example.covid19shahajjo.services.HospitalService;
 import com.example.covid19shahajjo.services.ServiceCallback;
+import com.example.covid19shahajjo.utils.Alert;
+import com.example.covid19shahajjo.utils.PermissionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -45,7 +47,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     private MapView mapView;
     public static MapboxMap mapboxMap;
     private BuildingPlugin buildingPlugin;
-    public static Context context;
     private PermissionsManager permissionsManager;
     private FloatingActionButton myLocation;
     public static Double latitude, longitude;
@@ -56,21 +57,69 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     List<MarkerOptions> markerOptions = new ArrayList<>();
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
 
+    private HospitalService hospitalService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Mapbox.getInstance(this, getString(R.string.access_token));
-
         setContentView(R.layout.activity_help_center_map);
-        context = getApplicationContext();
+        layoutComponentMapping(savedInstanceState);
+        checkPreconditionsAndLoadData();
+    }
+
+    private void layoutComponentMapping(Bundle savedInstanceState){
         myLocation = findViewById(R.id.mylocation);
         myLocation.setOnClickListener(this);
 
-        getHospitalInfo();
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+    }
+
+    private void checkPreconditionsAndLoadData(){
+        if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+           Toast.makeText(this, "Allow Permission To Access Location", Toast.LENGTH_SHORT).show();
+           return;
+        }
+        if(!DeviceNetwork.isGPSActive(this)){
+            showGPSDisabledAlert();
+            return;
+        }
+        getHospitalInfo();
+    }
+
+    public void getHospitalInfo(){
+        hospitalService = new HospitalService();
+        hospitalService.getHospitals(new ServiceCallback<List<HealthCenter>>() {
+            @Override
+            public void onResult(List<HealthCenter> list) {
+                markLocationOnMap(list);
+            }
+
+            @Override
+            public void onFailed(Exception exception) {
+                Toast.makeText(getApplicationContext(), "Failed to load hospitals information", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showGPSDisabledAlert(){
+        Alert alert = new Alert(this);
+        alert.show("GPS Service", "Please turn on your GPS");
+    }
+
+    private void markLocationOnMap(List<HealthCenter> healthCenters){
+        for(HealthCenter center : healthCenters){
+            markerOptions.add(getMark(center));
+        }
+        mapboxMap.addMarkers(markerOptions);
+    }
+
+    private MarkerOptions getMark(HealthCenter center){
+        return new MarkerOptions()
+                .position(new LatLng(center.Location.latitude, center.Location.longitude))
+                .setTitle(center.Name+"\n"+center.Address);
     }
 
     @Override
@@ -90,16 +139,11 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
-
             LocationComponent locationComponent = mapboxMap.getLocationComponent();
-
             locationComponent.activateLocationComponent(
                     LocationComponentActivationOptions.builder(this, loadedMapStyle).build());
-
             locationComponent.setLocationComponentEnabled(true);
-
             locationComponent.setCameraMode(CameraMode.TRACKING);
-
             locationComponent.setRenderMode(RenderMode.COMPASS);
         } else {
             permissionsManager = new PermissionsManager(this);
@@ -110,7 +154,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     @SuppressLint("MissingPermission")
     public void initLocationEngine() {
         locationEngine = LocationEngineProvider.getBestLocationEngine(this);
-
         LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
                 .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
                 .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
@@ -118,7 +161,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         locationEngine.requestLocationUpdates(request, callback, getMainLooper());
         locationEngine.getLastLocation(callback);
     }
-
 
     // Add the mapView lifecycle to the activity's lifecycle methods
     @Override
@@ -178,41 +220,19 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
                 }
             });
         } else {
-            Toast.makeText(this, "user_location_permission_not_granted", Toast.LENGTH_LONG).show();
             finish();
         }
-
     }
-
-    public void getHospitalInfo(){
-
-        HospitalService service = new HospitalService();
-        service.getHospitals(new ServiceCallback<List<HealthCenter>>() {
-            @Override
-            public void onResult(List<HealthCenter> o) {
-                for(int i=0;i<o.size();i++){
-                    markerOptions.add(new MarkerOptions().position(new LatLng(o.get(i).Location.latitude,o.get(i).Location.longitude)).setTitle(o.get(i).Name+"\n\n"+o.get(i).Address+"\n"));
-                }
-                mapboxMap.addMarkers(markerOptions);
-            }
-
-            @Override
-            public void onFailed(Exception exception) {
-                Toast.makeText(getApplicationContext(), "Fail to load hopital info", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
 
     @Override
     public void onClick(View v) {
+        if(!DeviceNetwork.isGPSActive(this)){
+            showGPSDisabledAlert();
+            return;
+        }
         initLocationEngine();
         CameraChange.setCameraPosition(latitude, longitude);
-
     }
-
-
 }
 
 
