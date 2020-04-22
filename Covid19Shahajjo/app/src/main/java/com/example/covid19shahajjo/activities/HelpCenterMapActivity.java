@@ -2,6 +2,7 @@ package com.example.covid19shahajjo.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -58,11 +59,13 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     public static LocationEngine locationEngine;
     public static final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
     public static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
-    List<MarkerOptions> markerOptions = new ArrayList<>();
+    static List<MarkerOptions> markerOptions = new ArrayList<>();
     private LocationChangeListeningActivityLocationCallback callback =  new LocationChangeListeningActivityLocationCallback(this);
 
-    private HospitalService hospitalService;
-    private final String DefaultDistrict = "Dhaka";
+    private static HospitalService hospitalService;
+    private static final String DefaultDistrict = "Dhaka";
+    public static Context context;
+    public static boolean controler = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         layoutComponentMapping(savedInstanceState);
         checkPreconditions();
         hospitalService = new HospitalService();
+        context = getApplicationContext();
     }
 
     private void setUserPreferableTitle(){
@@ -105,7 +109,8 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
-    private void fetchDataByLocation(GeoLocation location){
+
+    public void fetchDataByLocation(GeoLocation location){
         GeoAddress address = new GeoAddress(this, location);
         if(address.getDistrict() == null){
             return;
@@ -159,7 +164,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
                 .setTitle(center.Name+"\n\n"+center.Address+"\n"+getHealthCenterContactsAsString(center.Contact));
     }
 
-    private String getHealthCenterContactsAsString(List<String> list){
+    private static String getHealthCenterContactsAsString(List<String> list){
         String numbers = "";
         if(list == null){
             return numbers;
