@@ -10,7 +10,7 @@ public class CameraChange {
     public static void setCameraPosition(Double latitude, Double longitude){
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)) // Sets the new camera position
-                .zoom(12)
+                .zoom(17)
                 .bearing(180) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder

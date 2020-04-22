@@ -62,6 +62,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     private LocationChangeListeningActivityLocationCallback callback =  new LocationChangeListeningActivityLocationCallback(this);
 
     private HospitalService hospitalService;
+    private final String DefaultDistrict = "Dhaka";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         setContentView(R.layout.activity_help_center_map);
         setUserPreferableTitle();
         layoutComponentMapping(savedInstanceState);
+        checkPreconditions();
+        hospitalService = new HospitalService();
     }
 
     private void setUserPreferableTitle(){
@@ -102,25 +105,25 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
-    private void setLocationUpdateListener(){
-        getHospitalInfo("Dhaka");
-    }
-
     private void fetchDataByLocation(GeoLocation location){
         GeoAddress address = new GeoAddress(this, location);
-        Toast.makeText(this, address.getDistrict(), Toast.LENGTH_SHORT).show();
         if(address.getDistrict() == null){
             return;
         }
+        // Dhaka District -> Dhaka
         String districtName = address.getDistrict().split(" ")[0];
         getHospitalInfo(districtName);
     }
 
     public void getHospitalInfo(String districtName){
-        hospitalService = new HospitalService();
-        hospitalService.getHospitals(new ServiceCallback<List<HealthCenter>>() {
+        hospitalService.getHospitals(districtName, new ServiceCallback<List<HealthCenter>>() {
             @Override
             public void onResult(List<HealthCenter> list) {
+                if(list.isEmpty() && districtName != DefaultDistrict){
+                    showHospitalNotFoundAlert(districtName);
+                    getHospitalInfo(DefaultDistrict);
+                    return;
+                }
                 markLocationOnMap(list);
             }
 
@@ -137,21 +140,17 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void markLocationOnMap(List<HealthCenter> healthCenters){
-        if(healthCenters.size() == 0){
-            getDefaultHospitalsWithAlert();
-            return;
-        }
         for(HealthCenter center : healthCenters){
             markerOptions.add(getMark(center));
         }
         mapboxMap.addMarkers(markerOptions);
     }
 
-    private void getDefaultHospitalsWithAlert(){
+    private void showHospitalNotFoundAlert(String districtName){
+        String message = String.format("No dedicated COVID-19 hospital is available in %s district. " +
+                "We are going to load hospitals in Dhaka", districtName);
         Alert alert = new Alert(this);
-        alert.show("No Nearest Hospital",
-                "No dedicated COVID-19 hospital is available in your district. We are going to load hospitals in Dhaka");
-        getHospitalInfo("Dhaka");
+        alert.show("No Nearest Hospital", message);
     }
 
     private MarkerOptions getMark(HealthCenter center){
@@ -165,7 +164,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         if(list == null){
             return numbers;
         }
-        numbers+="\nContacts:";
+        numbers+="\nContacts:\n";
         for(String item : list){
             numbers += (item+"\n");
         }
@@ -286,6 +285,12 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         }
         initLocationEngine();
         setCameraOnLocation();
+        try{
+            fetchDataByLocation(new GeoLocation(latitude,longitude));
+        }catch (NullPointerException ex){
+            Toast.makeText(this, "Location isn't traced yet", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setCameraOnLocation(){
