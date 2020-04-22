@@ -49,13 +49,16 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:padding="6dp"/>
+                android:padding="6dp"
+                />
             <TextView
                 android:id="@+id/contact_area_uno"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:padding="6dp"
-                android:text="No-Number"/>
+                android:text="No-Number"
+                android:autoLink="phone"
+                android:linksClickable="true"/>
         </TableRow>
 
         <TableRow
@@ -73,7 +76,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:padding="6dp"
-                android:text="No-Number"/>
+                android:text="No-Number"
+                android:autoLink="phone"
+                android:linksClickable="true"/>
         </TableRow>
 
         <TableRow
@@ -91,7 +96,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:padding="6dp"
-                android:text="No-Number"/>
+                android:text="No-Number"
+                android:autoLink="phone"
+                android:linksClickable="true"/>
         </TableRow>
 
         <TableRow
@@ -109,7 +116,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:padding="6dp"
-                android:text="No-Number"/>
+                android:text="No-Number"
+                android:autoLink="phone"
+                android:linksClickable="true"/>
         </TableRow>
 
     </TableLayout>
