@@ -11,11 +11,13 @@ import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.helper.CameraChange;
 import com.example.covid19shahajjo.helper.DeviceNetwork;
 import com.example.covid19shahajjo.helper.LocationChangeListeningActivityLocationCallback;
+import com.example.covid19shahajjo.models.GeoLocation;
 import com.example.covid19shahajjo.models.HealthCenter;
 import com.example.covid19shahajjo.services.HospitalService;
 import com.example.covid19shahajjo.services.ServiceCallback;
 import com.example.covid19shahajjo.utils.Alert;
 import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.GeoAddress;
 import com.example.covid19shahajjo.utils.PermissionManager;
 import com.example.covid19shahajjo.utils.SharedStorge;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,9 +59,10 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     public static final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
     public static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
     List<MarkerOptions> markerOptions = new ArrayList<>();
-    private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
+    private LocationChangeListeningActivityLocationCallback callback =  new LocationChangeListeningActivityLocationCallback(this);
 
     private HospitalService hospitalService;
+    private final String DefaultDistrict = "Dhaka";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,8 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         setContentView(R.layout.activity_help_center_map);
         setUserPreferableTitle();
         layoutComponentMapping(savedInstanceState);
-        checkPreconditionsAndLoadData();
+        checkPreconditions();
+        hospitalService = new HospitalService();
     }
 
     private void setUserPreferableTitle(){
@@ -90,7 +94,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         mapView.getMapAsync(this);
     }
 
-    private void checkPreconditionsAndLoadData(){
+    private void checkPreconditions(){
         if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
            Toast.makeText(this, "Allow Permission To Access Location", Toast.LENGTH_SHORT).show();
            return;
@@ -99,14 +103,27 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
             showGPSDisabledAlert();
             return;
         }
-        getHospitalInfo();
     }
 
-    public void getHospitalInfo(){
-        hospitalService = new HospitalService();
-        hospitalService.getHospitals(new ServiceCallback<List<HealthCenter>>() {
+    private void fetchDataByLocation(GeoLocation location){
+        GeoAddress address = new GeoAddress(this, location);
+        if(address.getDistrict() == null){
+            return;
+        }
+        // Dhaka District -> Dhaka
+        String districtName = address.getDistrict().split(" ")[0];
+        getHospitalInfo(districtName);
+    }
+
+    public void getHospitalInfo(String districtName){
+        hospitalService.getHospitals(districtName, new ServiceCallback<List<HealthCenter>>() {
             @Override
             public void onResult(List<HealthCenter> list) {
+                if(list.isEmpty() && districtName != DefaultDistrict){
+                    showHospitalNotFoundAlert(districtName);
+                    getHospitalInfo(DefaultDistrict);
+                    return;
+                }
                 markLocationOnMap(list);
             }
 
@@ -129,10 +146,17 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         mapboxMap.addMarkers(markerOptions);
     }
 
+    private void showHospitalNotFoundAlert(String districtName){
+        String message = String.format("No dedicated COVID-19 hospital is available in %s district. " +
+                "We are going to load hospitals in Dhaka", districtName);
+        Alert alert = new Alert(this);
+        alert.show("No Nearest Hospital", message);
+    }
+
     private MarkerOptions getMark(HealthCenter center){
         return new MarkerOptions()
                 .position(new LatLng(center.Location.latitude, center.Location.longitude))
-                .setTitle(center.Name+"\n\n"+center.Address+"\n"+getHealthCenterContactsAsString(center.Contacts));
+                .setTitle(center.Name+"\n\n"+center.Address+"\n"+getHealthCenterContactsAsString(center.Contact));
     }
 
     private String getHealthCenterContactsAsString(List<String> list){
@@ -140,6 +164,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         if(list == null){
             return numbers;
         }
+        numbers+="\nContacts:\n";
         for(String item : list){
             numbers += (item+"\n");
         }
@@ -177,13 +202,17 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
 
     @SuppressLint("MissingPermission")
     public void initLocationEngine() {
-        locationEngine = LocationEngineProvider.getBestLocationEngine(this);
-        LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
-                .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
-                .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
+        try{
+            locationEngine = LocationEngineProvider.getBestLocationEngine(this);
+            LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
+                    .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
+                    .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
 
-        locationEngine.requestLocationUpdates(request, callback, getMainLooper());
-        locationEngine.getLastLocation(callback);
+            locationEngine.requestLocationUpdates(request, callback, getMainLooper());
+            locationEngine.getLastLocation(callback);
+        }catch (Exception e){
+
+        }
     }
 
     // Add the mapView lifecycle to the activity's lifecycle methods
@@ -255,7 +284,21 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
             return;
         }
         initLocationEngine();
-        CameraChange.setCameraPosition(latitude, longitude);
+        setCameraOnLocation();
+        try{
+            fetchDataByLocation(new GeoLocation(latitude,longitude));
+        }catch (NullPointerException ex){
+            Toast.makeText(this, "Location isn't traced yet", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void setCameraOnLocation(){
+        try{
+            CameraChange.setCameraPosition(latitude, longitude);
+        }catch (Exception e){
+            Toast.makeText(this, "Location can't traced", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

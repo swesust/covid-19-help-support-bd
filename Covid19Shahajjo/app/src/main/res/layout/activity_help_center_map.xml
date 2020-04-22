@@ -21,6 +21,7 @@ tools:context=".activities.HelpCenterMapActivity">
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        app:backgroundTint="#673AB7"
         app:srcCompat="@android:drawable/ic_menu_mylocation"
         tools:ignore="MissingConstraints" />
 </com.mapbox.mapboxsdk.maps.MapView>

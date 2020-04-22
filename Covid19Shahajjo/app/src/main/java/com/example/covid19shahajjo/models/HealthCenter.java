@@ -7,6 +7,6 @@ public class HealthCenter {
     public String Name;
     public String Address;
     public GeoLocation Location;
-    public List<String> Contacts;
+    public List<String> Contact;
     public String District;
 }

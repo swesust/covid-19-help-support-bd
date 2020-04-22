@@ -1,6 +1,13 @@
 package com.example.covid19shahajjo.models;
 
 public class GeoLocation {
-    public float latitude;
-    public float longitude;
+    public double latitude;
+    public double longitude;
+
+    public GeoLocation(){}
+
+    public GeoLocation(double latitude, double longitude){
+        this.latitude = latitude;
+        this.longitude =longitude;
+    }
 }
