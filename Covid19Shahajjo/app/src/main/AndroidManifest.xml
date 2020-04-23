@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.covid19shahajjo">
-  
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".utils.ConnectivityListener"
@@ -15,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity android:name=".activities.About"></activity>
+        <activity android:name=".activities.StatisticsActivity" />
         <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.HelpCenterMapActivity"/>
-        <activity android:name=".activities.ContactSupportActivity"/>
+        <activity android:name=".activities.HelpCenterMapActivity" />
+        <activity android:name=".activities.ContactSupportActivity" />
+
         <receiver
             android:name=".services.ConnectivityReceiver"
             android:enabled="true">
@@ -34,5 +31,10 @@
             </intent-filter>
         </receiver>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
