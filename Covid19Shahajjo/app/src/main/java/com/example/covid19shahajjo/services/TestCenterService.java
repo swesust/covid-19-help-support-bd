@@ -19,11 +19,11 @@ public class TestCenterService implements FireStoreService {
     private FirebaseFirestore firestore;
     private final String collectionName = "testCenters";
 
-    private TestCenterService(){
+    public TestCenterService(){
         firestore = FirebaseFirestore.getInstance();
     }
 
-    private void getAllCenters(ServiceCallback callback){
+    public void getAllCenters(ServiceCallback callback){
         CollectionReference collectionReference = firestore.collection(collectionName);
         collectionReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -38,7 +38,7 @@ public class TestCenterService implements FireStoreService {
         });
     }
 
-    private void getCenters(String districtName, ServiceCallback callback){
+    public void getCenters(String districtName, ServiceCallback callback){
         CollectionReference collectionReference = firestore.collection(collectionName);
         collectionReference.whereEqualTo("District", districtName).get()
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

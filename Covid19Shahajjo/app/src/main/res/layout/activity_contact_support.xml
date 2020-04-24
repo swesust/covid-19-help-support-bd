@@ -10,7 +10,8 @@
     <TextView
         android:id="@+id/contact_division_spinner_label"
         android:layout_margin="5dp"
-        android:textSize="18dp"
+        android:paddingLeft="5dp"
+        android:textSize="22dp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -23,7 +24,8 @@
     <TextView
         android:id="@+id/contact_district_spinner_label"
         android:layout_margin="5dp"
-        android:textSize="18dp"
+        android:paddingLeft="5dp"
+        android:textSize="22dp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -36,7 +38,8 @@
     <TextView
         android:id="@+id/contact_sub_district_spinner_label"
         android:layout_margin="5dp"
-        android:textSize="18dp"
+        android:paddingLeft="5dp"
+        android:textSize="22dp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
