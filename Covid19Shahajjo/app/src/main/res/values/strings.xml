@@ -26,4 +26,17 @@
         <item>সেটিংস</item>
         <item>শর্তাবলী</item>
     </string-array>
+
+    <string-array name="area_labels_bd">
+        <item>বিভাগ</item>
+        <item>জেলা</item>
+        <item> উপজেলা</item>
+    </string-array>
+
+    <string-array name="area_labels_en">
+        <item>Division</item>
+        <item>District</item>
+        <item> Sub-District</item>
+    </string-array>
+
 </resources>

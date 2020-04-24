@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 public class ContactSupportActivity extends AppCompatActivity {
 
     private Spinner spinnerDivision, spinnerDistrict, spinnerSubDistrict;
+    private TextView spinnerDivisionLabel, spinnerDistrictLabel, spinnerSubDistrictLabel;
     private ContactService service;
     private final  String LOGGER = "contact_support_log";
     private final String NoNumber = "No Number";
@@ -52,6 +53,7 @@ public class ContactSupportActivity extends AppCompatActivity {
         service = new ContactService();
         permissionChecker = new PermissionChecker();
         layoutComponentMapping();
+        setUserPreferableLabels();
         setPhoneCallActions();
     }
 
@@ -76,10 +78,31 @@ public class ContactSupportActivity extends AppCompatActivity {
         spinnerDistrict = (Spinner) findViewById(R.id.contact_district_spinner);
         spinnerSubDistrict = (Spinner) findViewById(R.id.contact_sub_district_spinner);
 
+        spinnerDivisionLabel = (TextView) findViewById(R.id.contact_division_spinner_label);
+        spinnerDistrictLabel = (TextView) findViewById(R.id.contact_district_spinner_label);
+        spinnerSubDistrictLabel = (TextView) findViewById(R.id.contact_sub_district_spinner_label);
+
         contactCivilSurgeon = (TextView) findViewById(R.id.contact_area_civil_surgeon);
         contactFireService = (TextView) findViewById(R.id.contact_area_fire_service);
         contactPolice = (TextView) findViewById(R.id.contact_area_police);
         contactUNO = (TextView) findViewById(R.id.contact_area_uno);
+    }
+
+    private void setUserPreferableLabels(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            String[] labels = getResources().getStringArray(R.array.area_labels_bd);
+            setAreaLabels(labels);
+        }else{
+            String[] labels = getResources().getStringArray(R.array.area_labels_en);
+            setAreaLabels(labels);
+        }
+    }
+
+    private void setAreaLabels(String[] labels){
+        spinnerDivisionLabel.setText(labels[0]);
+        spinnerDistrictLabel.setText(labels[1]);
+        spinnerSubDistrictLabel.setText(labels[2]);
     }
 
     private void setPhoneCallActions() {
