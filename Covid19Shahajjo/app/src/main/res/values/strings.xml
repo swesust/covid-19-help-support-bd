@@ -5,7 +5,7 @@
     <string name="home_title_bd">কোভিট-১৯ সাহায্য</string>
     <string name="message_for_user_eng">All the contacts and location information is collected from government of bangladesh online portal.
         A user must use those information only when these information is needed.</string>
-     <string name="message_for_user_ban">সমস্ত যোগাযোগ এবং অবস্থান সম্পর্কিত তথ্য বাংলাদেশ অনলাইন পোর্টাল সরকার থেকে সংগ্রহ করা হয়।
+     <string name="message_for_user_ban">সমস্ত যোগাযোগ এবং অবস্থান সম্পর্কিত তথ্য বাংলাদেশ সরকারের অনলাইন পোর্টাল থেকে সংগ্রহ করা।
       কোনও ব্যবহারকারীকে এই তথ্যগুলি কেবল তখনই ব্যবহার করতে হবে যখন এই তথ্যগুলির প্রয়োজন হয়।</string>
     <string name="settings_title_bd">সেটিংস</string>
 
@@ -17,11 +17,13 @@
         <item>Nearest COVID-19 Hospitals</item>
         <item>COVID-19 Statistics</item>
         <item>Settings</item>
+        <item>About</item>
     </string-array>
     <string-array name="menu_bd">
         <item>নিকটস্থ সাহায্য নাম্বার</item>
         <item>নিকটস্থ COVID-19 হাসপাতাল</item>
         <item>COVID-19 পরিসংখ্যান</item>
         <item>সেটিংস</item>
+        <item>শর্তাবলী</item>
     </string-array>
 </resources>

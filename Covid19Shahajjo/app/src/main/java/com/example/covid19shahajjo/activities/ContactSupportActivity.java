@@ -1,7 +1,11 @@
 package com.example.covid19shahajjo.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,12 +15,14 @@ import android.widget.Toast;
 
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.adapters.AreaArrayAdapter;
+import com.example.covid19shahajjo.helper.PermissionChecker;
 import com.example.covid19shahajjo.models.Area;
 import com.example.covid19shahajjo.models.AreaWithContacts;
 import com.example.covid19shahajjo.models.ContactsInfo;
 import com.example.covid19shahajjo.services.ContactService;
 import com.example.covid19shahajjo.services.ServiceCallback;
 import com.example.covid19shahajjo.utils.Enums;
+import com.example.covid19shahajjo.utils.PermissionManager;
 import com.example.covid19shahajjo.utils.SharedStorge;
 
 import java.util.List;
@@ -36,6 +42,7 @@ public class ContactSupportActivity extends AppCompatActivity {
     private List<AreaWithContacts> subDistrictList;
     private AreaWithContacts selectedSubDistrict;
 
+    private PermissionChecker permissionChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,9 @@ public class ContactSupportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_support);
         setUserPreferableTitle();
         service = new ContactService();
+        permissionChecker = new PermissionChecker();
         layoutComponentMapping();
+        setPhoneCallActions();
     }
 
     @Override
@@ -71,6 +80,59 @@ public class ContactSupportActivity extends AppCompatActivity {
         contactFireService = (TextView) findViewById(R.id.contact_area_fire_service);
         contactPolice = (TextView) findViewById(R.id.contact_area_police);
         contactUNO = (TextView) findViewById(R.id.contact_area_uno);
+    }
+
+    private void setPhoneCallActions() {
+        contactCivilSurgeon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contact = contactCivilSurgeon.getText().toString();
+                makePhoneCall(contact);
+            }
+        });
+        contactFireService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contact = contactFireService.getText().toString();
+                makePhoneCall(contact);
+            }
+        });
+        contactPolice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contact = contactPolice.getText().toString();
+                makePhoneCall(contact);
+            }
+        });
+        contactUNO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contact = contactUNO.getText().toString();
+                makePhoneCall(contact);
+            }
+        });
+    }
+
+    private void makePhoneCall(String phoneNumber){
+        if(!PermissionManager.hasPermission(this, Manifest.permission.CALL_PHONE)){
+            permissionChecker.requestPhoneCallPermission(this);
+            return;
+        }
+        if(phoneNumber == NoNumber){
+            return;
+        }
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:"+phoneNumber));
+        startActivity(callIntent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == permissionChecker.PHONE_CALL_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.CALL_PHONE)){
+                Toast.makeText(this, "Phone Call Permission is required", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void loadDivisions(){

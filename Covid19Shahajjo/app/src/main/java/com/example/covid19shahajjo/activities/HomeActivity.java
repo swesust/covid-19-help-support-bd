@@ -36,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int HEALTH_CENTER_POSITION = 1;
     private final int STATISTICS_POSITION = 2;
     private final int SETTINGS_POSITION = 3;
+    private final int ABOUT_POSITION = 4;
 
     private PermissionChecker permissionChecker;
 
@@ -109,6 +110,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(position == CONTACT_SUPPORT_POSITION){
             goPageIfConnected(ContactSupportActivity.class);
         }
+        else if(position == ABOUT_POSITION){
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void goPageIfConnected(Class<?> destinationClass){
@@ -157,6 +162,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)){
             permissionChecker.requestAccessNetworkStatePermission(this);
         }
+        if(!PermissionManager.hasPermission(this, Manifest.permission.CALL_PHONE)){
+            permissionChecker.requestPhoneCallPermission(this);
+        }
     }
 
     @Override
@@ -179,6 +187,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(requestCode == permissionChecker.ACCESS_COARSE_LOCATION_CODE){
             if(!PermissionManager.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
                 Toast.makeText(this, "Location Access Permission Is Required", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == permissionChecker.PHONE_CALL_CODE){
+            if(!PermissionManager.hasPermission(this, Manifest.permission.CALL_PHONE)){
+                Toast.makeText(this, "Phone Call Permission is required", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -7,7 +7,7 @@ android:layout_height="match_parent"
 android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
-tools:context=".activities.About"
+tools:context=".activities.AboutActivity"
     >
 
 <LinearLayout
@@ -28,9 +28,8 @@ tools:context=".activities.About"
        android:layout_height="wrap_content"
        android:text="@string/message_for_user_eng"
        android:textSize="25sp"
-       android:padding="10dp"
-
-       >
+       android:textColor="#ffffff"
+       android:padding="10dp">
 
    </TextView>
 
@@ -40,7 +39,6 @@ tools:context=".activities.About"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:src="@drawable/soclogo">
-
     </ImageView>
 
 
