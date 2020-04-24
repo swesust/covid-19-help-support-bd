@@ -9,7 +9,7 @@ import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.utils.Enums;
 import com.example.covid19shahajjo.utils.SharedStorge;
 
-public class About extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
     private TextView mesaage;
 
     @Override
@@ -18,6 +18,15 @@ public class About extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         mesaage = findViewById(R.id.user_message);
         setText();
+    }
+
+    private void setUerPreferableTitle(){
+        Enums.Language language = SharedStorge.getUserLanguage(this);
+        if(language == Enums.Language.BD){
+            setTitle("শর্তাবলী");
+        }else{
+            setTitle("About");
+        }
     }
 
     public void setText(){

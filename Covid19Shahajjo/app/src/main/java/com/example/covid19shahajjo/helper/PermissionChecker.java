@@ -10,6 +10,7 @@ public class PermissionChecker {
     public final int ACCESS_COARSE_LOCATION_CODE = 1002;
     public final int ACCESS_NETWORK_STATE_CODE = 1003;
     public final int INTERNET_CODE = 1004;
+    public final int PHONE_CALL_CODE = 1005;
 
     public void requestFineLocationPermission(Activity activity){
         String[] permission = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
@@ -29,5 +30,10 @@ public class PermissionChecker {
     public void requestInternetPermission(Activity activity){
         String[] permission = new String[]{Manifest.permission.INTERNET};
         PermissionManager.requestPermissions(activity, permission, INTERNET_CODE);
+    }
+
+    public void requestPhoneCallPermission(Activity activity){
+        String[] permission = new String[]{Manifest.permission.CALL_PHONE};
+        PermissionManager.requestPermissions(activity, permission, PHONE_CALL_CODE);
     }
 }

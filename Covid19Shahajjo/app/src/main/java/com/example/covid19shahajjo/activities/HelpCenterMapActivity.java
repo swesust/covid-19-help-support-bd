@@ -3,7 +3,6 @@ package com.example.covid19shahajjo.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -66,7 +65,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     private static HospitalService hospitalService;
     private static final String DefaultDistrict = "Dhaka";
     public static Context context;
-    public static boolean controler = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -64,6 +64,7 @@ public class HomeMenuAdapter extends ArrayAdapter<String> {
             case 1: return R.drawable.ic_hospital;
             case 2: return R.drawable.ic_statistics;
             case 3: return R.drawable.ic_settings;
+            case 4: return R.drawable.ic_about;
             default: return -1;
         }
     }
