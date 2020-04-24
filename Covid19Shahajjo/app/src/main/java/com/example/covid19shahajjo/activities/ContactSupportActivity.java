@@ -295,22 +295,6 @@ public class ContactSupportActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        try{
-            divisionList.clear();
-            districtList.clear();
-            subDistrictList.clear();
-            selectedDivision = null;
-            selectedDistrict = null;
-            selectedSubDistrict = null;
-        }catch (NullPointerException e){
-
-        }
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         try{

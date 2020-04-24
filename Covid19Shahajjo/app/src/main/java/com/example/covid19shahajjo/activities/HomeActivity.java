@@ -34,9 +34,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private final int CONTACT_SUPPORT_POSITION = 0;
     private final int HEALTH_CENTER_POSITION = 1;
-    private final int STATISTICS_POSITION = 2;
-    private final int SETTINGS_POSITION = 3;
-    private final int ABOUT_POSITION = 4;
+    private final int TEST_CENTER_POSITION = 2;
+    private final int STATISTICS_POSITION = 3;
+    private final int SETTINGS_POSITION = 4;
+    private final int ABOUT_POSITION = 5;
 
     private PermissionChecker permissionChecker;
 
@@ -112,6 +113,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         else if(position == ABOUT_POSITION){
             Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+        else if(position == TEST_CENTER_POSITION){
+            Intent intent = new Intent(this, TestCenterActivity.class);
             startActivity(intent);
         }
     }

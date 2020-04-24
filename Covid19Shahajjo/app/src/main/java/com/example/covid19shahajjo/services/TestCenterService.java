@@ -17,7 +17,7 @@ import java.util.List;
 public class TestCenterService implements FireStoreService {
 
     private FirebaseFirestore firestore;
-    private final String collectionName = "testCenter";
+    private final String collectionName = "testCenters";
 
     private TestCenterService(){
         firestore = FirebaseFirestore.getInstance();
