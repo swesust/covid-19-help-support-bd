@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SharedStorge {
 
-    private static final int DEFAULT_INT = -100000;
+    private static final int DEFAULT_INT = 1;
     private static final String KEY_LANGUAGE = "lang";
     private static final String STORE_NAME = "user_preferences";
 

@@ -34,9 +34,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private final int CONTACT_SUPPORT_POSITION = 0;
     private final int HEALTH_CENTER_POSITION = 1;
-    private final int STATISTICS_POSITION = 2;
-    private final int SETTINGS_POSITION = 3;
-    private final int ABOUT_POSITION = 4;
+    private final int TEST_CENTER_POSITION = 2;
+    private final int STATISTICS_POSITION = 3;
+    private final int SETTINGS_POSITION = 4;
+    private final int ABOUT_POSITION = 5;
 
     private PermissionChecker permissionChecker;
 
@@ -57,15 +58,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             String title = getResources().getString(R.string.home_title_bd);
             setTitle(title);
         }else{
-            setTitle("COVID-19 Shahajjo");
+            setTitle("COVID-19 Sahajjo");
         }
     }
 
     private void checkPreconditions(){
         Enums.Language language =  SharedStorge.getUserLanguage(this);
         if(language == Enums.Language.NONE){
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            SharedStorge.setUserLanguage(this, Enums.Language.EN);
         }
         else{
             userLang = language;
@@ -82,10 +82,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String[] userPreferableMenu(){
         String menus[];
-        if(userLang == Enums.Language.EN){
-            menus = getResources().getStringArray(R.array.menu_en);
-        }else{
+        if(userLang == Enums.Language.BD){
             menus = getResources().getStringArray(R.array.menu_bd);
+        }else{
+            menus = getResources().getStringArray(R.array.menu_en);
         }
        return menus;
     }
@@ -102,7 +102,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(position == SETTINGS_POSITION){
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            finish();
         }
         else if(position == HEALTH_CENTER_POSITION){
             goPageIfConnected(HelpCenterMapActivity.class);
@@ -112,6 +111,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         else if(position == ABOUT_POSITION){
             Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+        else if(position == TEST_CENTER_POSITION){
+            Intent intent = new Intent(this, TestCenterActivity.class);
             startActivity(intent);
         }
     }

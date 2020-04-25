@@ -79,6 +79,5 @@ public class SettingsActivity extends AppCompatActivity {
     public void redirectHomePage(){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-        finish();
     }
 }

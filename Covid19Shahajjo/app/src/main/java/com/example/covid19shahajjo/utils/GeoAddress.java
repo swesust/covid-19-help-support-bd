@@ -20,7 +20,7 @@ public class GeoAddress {
 
     public GeoAddress(Context context, GeoLocation location){
         Location = location;
-        geocoder = new Geocoder(context, Locale.getDefault());
+        geocoder = new Geocoder(context, Locale.ENGLISH);
         mapAddress();
     }
 

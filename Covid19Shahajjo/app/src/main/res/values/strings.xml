@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Covid19Shahajjo</string>
+    <string name="app_name">Covid19Sahajjo</string>
     <string name="access_token" translatable="false"> sk.eyJ1IjoibWVoZWRpcnVtaSIsImEiOiJjazVoZHM1ZXkwMmo0M2xudmIzZjNxNG85In0.Z4M4-gPDTIIxr9MB7BPHoQ</string>
 
     <string name="home_title_bd">কোভিট-১৯ সাহায্য</string>
     <string name="message_for_user_eng">All the contacts and location information is collected from government of bangladesh online portal.
         A user must use those information only when these information is needed.</string>
-     <string name="message_for_user_ban">সমস্ত যোগাযোগ এবং অবস্থান সম্পর্কিত তথ্য বাংলাদেশ সরকারের অনলাইন পোর্টাল থেকে সংগ্রহ করা।
+    <string name="message_for_user_ban">সমস্ত যোগাযোগ এবং অবস্থান সম্পর্কিত তথ্য বাংলাদেশ সরকারের অনলাইন পোর্টাল থেকে সংগ্রহ করা।
       কোনও ব্যবহারকারীকে এই তথ্যগুলি কেবল তখনই ব্যবহার করতে হবে যখন এই তথ্যগুলির প্রয়োজন হয়।</string>
     <string name="settings_title_bd">সেটিংস</string>
 
@@ -15,6 +15,7 @@
     <string-array name="menu_en">
         <item>Nearest Contact Support</item>
         <item>Nearest COVID-19 Hospitals</item>
+        <item>COVID-19 Test Centers</item>
         <item>COVID-19 Statistics</item>
         <item>Settings</item>
         <item>About</item>
@@ -22,8 +23,22 @@
     <string-array name="menu_bd">
         <item>নিকটস্থ সাহায্য নাম্বার</item>
         <item>নিকটস্থ COVID-19 হাসপাতাল</item>
+        <item>COVID-19 পরীক্ষা কেন্দ্র</item>
         <item>COVID-19 পরিসংখ্যান</item>
         <item>সেটিংস</item>
         <item>শর্তাবলী</item>
     </string-array>
+
+    <string-array name="area_labels_bd">
+        <item>বিভাগ</item>
+        <item>জেলা</item>
+        <item> উপজেলা</item>
+    </string-array>
+
+    <string-array name="area_labels_en">
+        <item>Division</item>
+        <item>District</item>
+        <item> Sub-District</item>
+    </string-array>
+
 </resources>
