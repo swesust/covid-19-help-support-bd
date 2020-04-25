@@ -65,8 +65,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private void checkPreconditions(){
         Enums.Language language =  SharedStorge.getUserLanguage(this);
         if(language == Enums.Language.NONE){
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            SharedStorge.setUserLanguage(this, Enums.Language.EN);
         }
         else{
             userLang = language;
