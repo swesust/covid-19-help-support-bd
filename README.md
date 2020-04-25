@@ -1,48 +1,39 @@
+# COVID-19 Sahajjo
+
+We developed this application to provide some emergency contacts and information to help people in Bangladesh in the situation of COVID-19.
+
+<img src="/images/1.jpg" style="zoom: 33%;" />
+
+
+
+
+
 ## Functionalities
 
-* **Nearest COVID-19 Help Center**
+* **Area wise help support contacts**
   
-  * User request way
-    1. User can select Division > District > Sub-District 
-    2. User GPS map location
-  * Response
-    1. A list of help center with name, contact info and address
-    2. MAP view
+  <img src="/images/2.jpg" style="zoom: 25%;" />
+  
+* **Nearest COVID-19 dedicated hospitals and health centers**
+
+  <img src="/images/3.jpg" style="zoom: 25%;" />
+  
+* **COVID-19 test centers**
+
+  <img src="/images/4.jpg" style="zoom: 25%;" />
   
   
+
+* **COVID-19 Status** 
+
+  <img src="/images/5.jpg" style="zoom: 25%;" />
   
-* **Nearest COVID-19 Test Center**
+* **Support Bengali and English**
 
-  * User request way
-    1. User can select Division > District > Sub-District 
-    2. GPS Map location
-  * Response
-    1. A list of testing center with name, contact info and address
-    2. MAP view
+  <img src="/images/7.jpg" style="zoom: 25%;" />
 
+  
+
+  
 
 
-
-* **COVID-19 Story** (additional feature if possible)
-
-  A cartoon/picturized series of story that will represent.
-
-  * What is COVID-19
-  * What are the symptoms of COVID-19
-  * What should I do to protect myself from COVID-19 
-
-
-
-* **COVID-19 Status** (additional feature if possible)
-
-  Use an API to fetch data and make statistical report and graph
-
-
-
-Features will be presented in English. But presentation will be presented in Bengali language also. Like **COVID-19 Story**, help center items.
-
-
-
-**A sample prototype  is given below**
-
-![](images/protype.svg)
