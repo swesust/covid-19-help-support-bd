@@ -63,7 +63,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
     private LocationChangeListeningActivityLocationCallback callback =  new LocationChangeListeningActivityLocationCallback(this);
 
     private static HospitalService hospitalService;
-    private static final String DefaultDistrict = "Dhaka";
     public static Context context;
 
     @Override
@@ -123,15 +122,28 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
         hospitalService.getHospitals(districtName, new ServiceCallback<List<HealthCenter>>() {
             @Override
             public void onResult(List<HealthCenter> list) {
-                if(list.isEmpty() && districtName != DefaultDistrict){
-                    showHospitalNotFoundAlert(districtName);
-                    getHospitalInfo(DefaultDistrict);
+                if(list.isEmpty()){
+                    getAllHospitalInfo();
                     return;
                 }
                 markLocationOnMap(list);
                 setCameraOnLocation(list.get(0).Location);
             }
 
+            @Override
+            public void onFailed(Exception exception) {
+                Toast.makeText(getApplicationContext(), "Failed to load hospitals information", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getAllHospitalInfo(){
+        hospitalService.getHospitals(new ServiceCallback<List<HealthCenter>>() {
+            @Override
+            public void onResult(List<HealthCenter> list) {
+                markLocationOnMap(list);
+                setCameraOnLocation(list.get(0).Location);
+            }
             @Override
             public void onFailed(Exception exception) {
                 Toast.makeText(getApplicationContext(), "Failed to load hospitals information", Toast.LENGTH_SHORT).show();
@@ -149,13 +161,6 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
             markerOptions.add(getMark(center));
         }
         mapboxMap.addMarkers(markerOptions);
-    }
-
-    private void showHospitalNotFoundAlert(String districtName){
-        String message = String.format("No dedicated COVID-19 hospital is available in %s district. " +
-                "We are going to load hospitals in Dhaka", districtName);
-        Alert alert = new Alert(this);
-        alert.show("No Nearest Hospital", message);
     }
 
     private MarkerOptions getMark(HealthCenter center){

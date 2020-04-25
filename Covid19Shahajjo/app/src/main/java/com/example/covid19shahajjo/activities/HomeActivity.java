@@ -82,10 +82,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String[] userPreferableMenu(){
         String menus[];
-        if(userLang == Enums.Language.EN){
-            menus = getResources().getStringArray(R.array.menu_en);
-        }else{
+        if(userLang == Enums.Language.BD){
             menus = getResources().getStringArray(R.array.menu_bd);
+        }else{
+            menus = getResources().getStringArray(R.array.menu_en);
         }
        return menus;
     }
@@ -102,7 +102,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(position == SETTINGS_POSITION){
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            finish();
         }
         else if(position == HEALTH_CENTER_POSITION){
             goPageIfConnected(HelpCenterMapActivity.class);
