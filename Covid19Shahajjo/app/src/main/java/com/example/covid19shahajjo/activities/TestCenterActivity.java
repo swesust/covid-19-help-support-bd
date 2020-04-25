@@ -30,8 +30,9 @@ public class TestCenterActivity extends AppCompatActivity {
     private Spinner areaSpinner;
     private ListView centerListView;
 
-    private List<TestCenter> testCenters;
     private TestCenterService testCenterService;
+
+    private final String LOGGER = "test_center_service";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class TestCenterActivity extends AppCompatActivity {
         setUserPreferableTitle();
         layoutComponentMapping();
         testCenterService = new TestCenterService();
+        Logger.getLogger(LOGGER).log(Level.INFO, "onCreate called");
     }
 
     private void setUserPreferableTitle(){
@@ -65,44 +67,45 @@ public class TestCenterActivity extends AppCompatActivity {
     }
 
     private void loadTestCenters(){
+        Logger.getLogger(LOGGER).log(Level.INFO, "loadTestCenters called");
         testCenterService.getAllCenters(new ServiceCallback<List<TestCenter>>() {
             @Override
             public void onResult(List<TestCenter> list) {
-                Logger.getLogger("test_center_service_result").log(Level.INFO, "Found: "+list.size());
+                Logger.getLogger(LOGGER).log(Level.INFO, "Found: "+list.size());
                 mapCentersOnView(list);
             }
 
             @Override
             public void onFailed(Exception exception) {
+                Logger.getLogger(LOGGER).log(Level.INFO, "service failed called");
                 Toast.makeText(getApplicationContext(), "Failed to load information", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void mapCentersOnView(List<TestCenter> testCenters){
-        this.testCenters = testCenters;
+        Logger.getLogger(LOGGER).log(Level.INFO, "Mapper called");
         TestCenterListAdapter adapter = new TestCenterListAdapter(this, R.layout.layout_test_center_item, testCenters);
         centerListView.setAdapter(adapter);
         centerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TestCenter testCenter = testCenters.get(position);
-                if(testCenter.Contact != null || testCenter.Contact != ""){
-                    makeDialIntent(testCenter.Contact);
-                }
+                makeDialIntent(testCenter.Contact);
             }
         });
     }
 
     private void makeDialIntent(String number){
         Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-        dialIntent.setData(Uri.parse("tes:"+number));
+        dialIntent.setData(Uri.parse("tel:"+number));
         startActivity(dialIntent);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Logger.getLogger(LOGGER).log(Level.INFO, "onStart Called");
         loadTestCenters();
     }
 }

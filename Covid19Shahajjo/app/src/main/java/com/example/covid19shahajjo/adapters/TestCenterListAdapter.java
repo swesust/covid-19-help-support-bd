@@ -26,7 +26,7 @@ public class TestCenterListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return this.list.size();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class TestCenterListAdapter extends BaseAdapter {
 
         TextView testCenterName = row.findViewById(R.id.test_center_item_name);
         TextView testCenterDistrict = row.findViewById(R.id.test_center_item_district);
-        TextView testCenterContact = row.findViewById(R.id.test_center_item_contact);
+        TextView testCenterContact =  row.findViewById(R.id.test_center_item_contact);
 
         testCenterName.setText(testCenter.Name);
         testCenterDistrict.setText(testCenter.District);
