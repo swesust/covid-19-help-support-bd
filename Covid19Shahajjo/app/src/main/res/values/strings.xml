@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Covid19Shahajjo</string>
+    <string name="app_name">Covid19Sahajjo</string>
     <string name="access_token" translatable="false"> sk.eyJ1IjoibWVoZWRpcnVtaSIsImEiOiJjazVoZHM1ZXkwMmo0M2xudmIzZjNxNG85In0.Z4M4-gPDTIIxr9MB7BPHoQ</string>
 
     <string name="home_title_bd">কোভিট-১৯ সাহায্য</string>

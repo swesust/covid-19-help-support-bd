@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             String title = getResources().getString(R.string.home_title_bd);
             setTitle(title);
         }else{
-            setTitle("COVID-19 Shahajjo");
+            setTitle("COVID-19 Sahajjo");
         }
     }
 
