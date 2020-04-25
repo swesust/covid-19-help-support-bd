@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.covid19shahajjo.R;
@@ -26,8 +24,6 @@ import java.util.logging.Logger;
 
 public class TestCenterActivity extends AppCompatActivity {
 
-    private TextView areaSpinnerLabel;
-    private Spinner areaSpinner;
     private ListView centerListView;
 
     private TestCenterService testCenterService;
@@ -54,20 +50,12 @@ public class TestCenterActivity extends AppCompatActivity {
     }
 
     private void layoutComponentMapping(){
-        areaSpinnerLabel = (TextView) findViewById(R.id.test_center_area_spinner_label);
-        areaSpinner = (Spinner) findViewById(R.id.test_center_area_spinner);
         centerListView = (ListView) findViewById(R.id.test_center_list);
-
-        Enums.Language language = SharedStorge.getUserLanguage(this);
-        if(language == Enums.Language.BD){
-            areaSpinnerLabel.setText("জেলা");
-        }else{
-            areaSpinnerLabel.setText("District");
-        }
     }
 
     private void loadTestCenters(){
         Logger.getLogger(LOGGER).log(Level.INFO, "loadTestCenters called");
+        Toast.makeText(this, "Information Loading...", Toast.LENGTH_SHORT).show();
         testCenterService.getAllCenters(new ServiceCallback<List<TestCenter>>() {
             @Override
             public void onResult(List<TestCenter> list) {
@@ -95,6 +83,7 @@ public class TestCenterActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void makeDialIntent(String number){
         Intent dialIntent = new Intent(Intent.ACTION_DIAL);

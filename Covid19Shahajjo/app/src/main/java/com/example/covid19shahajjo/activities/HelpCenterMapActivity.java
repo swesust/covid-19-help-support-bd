@@ -129,6 +129,7 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
                     return;
                 }
                 markLocationOnMap(list);
+                setCameraOnLocation(list.get(0).Location);
             }
 
             @Override
@@ -304,6 +305,15 @@ public class HelpCenterMapActivity extends AppCompatActivity implements OnMapRea
             Toast.makeText(this, "Location can't traced", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void setCameraOnLocation(GeoLocation location){
+        try{
+            CameraChange.setCameraPosition(location.latitude, location.longitude);
+        }catch (Exception e){
+            Toast.makeText(this, "Location can't traced", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
 
 
