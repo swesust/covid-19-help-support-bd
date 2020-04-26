@@ -4,17 +4,9 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.PermissionRequest;
-import android.webkit.RenderProcessGoneDetail;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covid19shahajjo.R;
@@ -24,14 +16,10 @@ import com.example.covid19shahajjo.models.YouTubeVideos;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.menu.YouTubePlayerMenu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
 
@@ -43,7 +31,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     List<YouTubeVideos>youTubeVideosList;
 
 
-    public VideoAdapter(List<YouTubeVideos> youTubeVideosList,Covid19StoryActivity covid19StoryActivity,RecyclerView storyRecyclerView) {
+    public VideoAdapter(List<YouTubeVideos> youTubeVideosList, Covid19StoryActivity covid19StoryActivity, RecyclerView storyRecyclerView) {
         this.youTubeVideosList = youTubeVideosList;
         this.covid19StoryActivity=covid19StoryActivity;
         this.storyRecyclerView=storyRecyclerView;
@@ -114,7 +102,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             @Override
             public void onStateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlayerState state) {
 
-                System.out.println("onStateChange******************"+ state);
+
                 if(state.toString().equals("PLAYING") || state.toString().equals("BUFFERING") || state.toString().equals("UNKNOWN")){
                     if(isPlaying==true){
                         pauseAllPlayer();

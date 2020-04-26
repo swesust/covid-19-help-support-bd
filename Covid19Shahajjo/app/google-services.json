@@ -1,43 +1,42 @@
 {
   "project_info": {
-    "project_number": "230655608685",
-    "firebase_url": "https://testandroidfirebase-a6635.firebaseio.com",
-    "project_id": "testandroidfirebase-a6635",
-    "storage_bucket": "testandroidfirebase-a6635.appspot.com"
+    "project_number": "659471342983",
+    "firebase_url": "https://covid-19-bd-support-app-sample.firebaseio.com",
+    "project_id": "covid-19-bd-support-app-sample",
+    "storage_bucket": "covid-19-bd-support-app-sample.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:230655608685:android:b30f8c99a80a843855fc64",
+        "mobilesdk_app_id": "1:659471342983:android:9fc0f85ed1d01f18e78722",
         "android_client_info": {
           "package_name": "com.example.covid19shahajjo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "230655608685-59acpguv1tshqhh8b05oqmegostgvqad.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.covid19shahajjo",
-            "certificate_hash": "496a70c69d9f912f6f27f80ecd43039d4c272843"
-          }
-        },
-        {
-          "client_id": "230655608685-n50dio2024q09vfg8foa2sekjunam90q.apps.googleusercontent.com",
+          "client_id": "659471342983-kiap51u769sb9n61uoq2g16o297et3bo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCy9E6IAY_Jn6yBt_rKACDt7aWsb5UpVNw"
+          "current_key": "AIzaSyDW16XQvTjKMjyBfUUxz48uWw7W5dOLgfs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "230655608685-n50dio2024q09vfg8foa2sekjunam90q.apps.googleusercontent.com",
+              "client_id": "659471342983-kiap51u769sb9n61uoq2g16o297et3bo.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "659471342983-74vgapq71n9qnq6td4igvu0sjpce6hpj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example"
+              }
             }
           ]
         }
