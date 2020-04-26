@@ -70,7 +70,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
-              //  super.onReady(youTubePlayer);
+
                 covid19StoryActivity.getLifecycle().addObserver(holder.youTubePlayerView);
                 youTubePlayer.cueVideo(youTubeVideosList.get(position).getUrl(),0);
                 youTubePlayerArrayList.add(youTubePlayer);

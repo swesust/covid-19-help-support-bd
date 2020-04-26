@@ -2,7 +2,7 @@
 
 We developed this application to provide some emergency contacts and information to help people in Bangladesh in the situation of COVID-19.
 
-<img src="/images/1.jpg" style="zoom: 33%;" />
+<img src="/images/1.png" style="zoom: 33%;" />
 
 
 
@@ -35,7 +35,7 @@ We developed this application to provide some emergency contacts and information
 
   * **Covid-19 Story**
 
-  <img src="/images/8.jpg" style="zoom: 25%;" />
+  <img src="/images/8.png" style="zoom: 25%;" />
 
   
 

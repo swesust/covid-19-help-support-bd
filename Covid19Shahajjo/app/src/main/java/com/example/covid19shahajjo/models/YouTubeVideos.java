@@ -55,7 +55,6 @@ public class YouTubeVideos {
         this.url = url;
     }
 
-    ///Add Youtube video title and watch link to firebase realtime database
 
     public void addYoutubeVideoData(DatabaseReference databaseReference,String title,String url){
 
@@ -83,7 +82,7 @@ public class YouTubeVideos {
 
                 for(DataSnapshot youtubeVideo : dataSnapshot.getChildren()){
                     YouTubeVideos tempdata =youtubeVideo.getValue(YouTubeVideos.class);
-                    //Add data to vector data
+
                     youTubeVideos.add(new YouTubeVideos(tempdata.getTitle(),tempdata.getUrl()));
 
                 }
