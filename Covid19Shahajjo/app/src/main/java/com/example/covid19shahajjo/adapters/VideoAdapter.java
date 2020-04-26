@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covid19shahajjo.R;
 import com.example.covid19shahajjo.activities.Covid19StoryActivity;
-import com.example.covid19shahajjo.activities.youtubeFullScreenActivity;
+import com.example.covid19shahajjo.activities.YoutubeFullScreenActivity;
 import com.example.covid19shahajjo.models.YouTubeVideos;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -57,7 +57,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             @Override
             public void onClick(View view) {
 
-                Intent myIntent = new Intent(covid19StoryActivity, youtubeFullScreenActivity.class);
+                Intent myIntent = new Intent(covid19StoryActivity, YoutubeFullScreenActivity.class);
                 myIntent.putExtra("url", youTubeVideosList.get(position).getUrl()); //Optional parameters
                 myIntent.putExtra("playerCurrentSecondPlayed", playerCurrentSecondPlayed); //Optional parameters
                 covid19StoryActivity.startActivity(myIntent);
