@@ -32,6 +32,11 @@ We developed this application to provide some emergency contacts and information
 
   <img src="/images/7.jpg" style="zoom: 25%;" />
 
+
+  * **Covid-19 Story**
+
+  <img src="/images/8.jpg" style="zoom: 25%;" />
+
   
 
   
