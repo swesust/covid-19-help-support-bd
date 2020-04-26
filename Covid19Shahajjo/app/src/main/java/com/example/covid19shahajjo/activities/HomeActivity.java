@@ -38,6 +38,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int STATISTICS_POSITION = 3;
     private final int SETTINGS_POSITION = 4;
     private final int ABOUT_POSITION = 5;
+    private final int VIDEO_STORY_POSITION = 6;
+
 
     private PermissionChecker permissionChecker;
 
@@ -115,6 +117,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         else if(position == TEST_CENTER_POSITION){
             Intent intent = new Intent(this, TestCenterActivity.class);
+            startActivity(intent);
+        }
+        else if(position==VIDEO_STORY_POSITION){
+            Intent intent = new Intent(this, Covid19StoryActivity.class);
             startActivity(intent);
         }
     }
