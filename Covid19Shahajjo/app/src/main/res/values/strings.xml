@@ -13,6 +13,7 @@
     <string name="nearest_hospitals_title_bd">নিকটস্থ হাসপাতাল</string>
     <string name="contact_support_title_bd">নিকটস্থ সাহায্য নাম্বার</string>
     <string name="covid_story_title_bd">ভিডিও সতর্কবার্তা</string>
+
     <string-array name="menu_en">
         <item>Nearest Contact Support</item>
         <item>Nearest COVID-19 Hospitals</item>

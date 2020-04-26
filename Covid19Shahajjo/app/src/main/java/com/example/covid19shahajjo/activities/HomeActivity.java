@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int ABOUT_POSITION = 5;
     private final int VIDEO_STORY_POSITION = 6;
 
+
     private PermissionChecker permissionChecker;
 
     @Override

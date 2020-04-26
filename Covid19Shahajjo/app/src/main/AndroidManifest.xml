@@ -29,6 +29,7 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.HelpCenterMapActivity" />
         <activity android:name=".activities.ContactSupportActivity" />
+
         <activity android:name=".activities.YoutubeFullScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape"
