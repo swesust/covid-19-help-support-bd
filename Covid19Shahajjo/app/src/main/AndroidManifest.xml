@@ -30,6 +30,17 @@
         <activity android:name=".activities.HelpCenterMapActivity" />
         <activity android:name=".activities.ContactSupportActivity" />
 
+        <activity android:name=".activities.YoutubeFullScreenActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape"
+            android:theme="@style/youtubeFullScreenTheme">
+
+        </activity>
+        <activity android:name=".activities.Covid19StoryActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <receiver
             android:name=".services.ConnectivityReceiver"
             android:enabled="true">
